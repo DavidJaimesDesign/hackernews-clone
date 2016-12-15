@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
+
+const isSearched = (query) => (item) => !query || item.title.toLowerCase().indexOf(query.toLowerCase()) !== -1;
 
 const list = [
   {
@@ -27,25 +28,45 @@ class App extends Component {
    super(props);
 
    this.state = {
-     list
+     list,
      query: '',
    };
 
    this.onSearchChange = this.onSearchChange.bind(this);
   }
 
-  onSearchChange(even) {
+  onSearchChange(event) {
     this.setState({ query: event.target.value});
   }
 
   render() {
-    const helloWorld = 'Welcome to React';
+    const {query , list} = this.state;
     return (
       <div className="App">
-	<form>
-         <input type = "text" onChange = {this.onSearchChange}/>
-        </form>
-	{ this.state.list.map((item, key) =>
+        <Search value={query} onChange={this.onSearchChange}/>
+	<Table list={list} pattern={query}/>
+      </div>
+    );
+  }
+}
+
+class Search extends Component {
+  render() {
+    const { value, onChange } = this.props;
+    return(
+      <form>
+        <input type = "text" value = {value} onChange = {onChange} />
+      </form>
+    );	    
+  }
+}
+
+class Table extends Component {
+  render() {
+    const { list, pattern } = this.props;
+    return(
+      <div>
+	{ list.filter(isSearched(pattern)).map((item) =>
 	    <div key = {item.ObjectID}>
 		<span> <a href = {item.url}>{item.title}</a></span>
 	        <span>{item.author}</span>
@@ -54,8 +75,7 @@ class App extends Component {
             </div>
 	)}
       </div>
-    );
+    )
   }
 }
-
 export default App;
