@@ -43,22 +43,22 @@ class App extends Component {
     const {query , list} = this.state;
     return (
       <div className="App">
-        <Search value={query} onChange={this.onSearchChange}/>
-	<Table list={list} pattern={query}/>
+	<Search value={query} onChange={this.onSearchChange}>
+	   Search
+        </Search>
+        <Table list={list} pattern={query}/>
       </div>
     );
   }
 }
 
-class Search extends Component {
-  render() {
-    const { value, onChange } = this.props;
+const Search= ({ value, onChange, children}) => {
+    //do something here
     return(
       <form>
-        <input type = "text" value = {value} onChange = {onChange} />
+        {children} <input type="text" value={value} onChange={onChange} />
       </form>
     );	    
-  }
 }
 
 class Table extends Component {
