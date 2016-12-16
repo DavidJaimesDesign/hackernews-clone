@@ -40,40 +40,35 @@ class App extends Component {
     this.setState({ query: event.target.value});
   }
 
-  render() {
-    const {query , list} = this.state;
-    return (
-      <div>
-	<div>
-	  <Search value={query} onChange={this.onSearchChange}>
-	     Search
-          </Search>
-	</div>
-        <Table list={list} pattern={query}/>
+render() {
+  const { query, list } = this.state;
+  return (
+    <div className="page">
+      <div className="interactions">
+        <Search value={query} onChange={this.onSearchChange}>
+          Search
+        </Search>
       </div>
-    );
+      <Table list={list} pattern={query} />
+    </div>
+  );
   }
 }
+const Search = ({ value, onChange, children }) =>
+  <form>
+    {children} <input type="text" value={value} onChange={onChange} />
+  </form>
 
-const Search= ({ value, onChange, children}) => {
-    //do something here
-    return(
-      <form>
-        {children} <input type="text" value={value} onChange={onChange} />
-      </form>
-    );	    
-}
-
-const Table = ({ list, pattern}) => { 
-  <div>
-  { list.filter(isSearched(pattern)).map((item) => {
-	<div key={item.ObjectID}>
-          <span><a href={item.url}>{item.title}</a></span>
-	  <span>{item.author}</span>
-	  <span>{item.num_comments}</span>
-	  <span>{item.points}</span>
-	</div>
-  })}
+const Table = ({ list, pattern }) =>
+  <div className="table">
+    { list.filter(isSearched(pattern)).map((item) =>
+      <div key={item.objectID} className="table-row">
+        <span><a href={item.url}>{item.title}</a></span>
+        <span>{item.author}</span>
+        <span>{item.num_comments}</span>
+        <span>{item.points}</span>
+    </div>
+  )}
   </div>
-}
+
 export default App;
