@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
+import './index.css';
 
 const isSearched = (query) => (item) => !query || item.title.toLowerCase().indexOf(query.toLowerCase()) !== -1;
 
@@ -42,8 +43,8 @@ class App extends Component {
   render() {
     const {query , list} = this.state;
     return (
-      <div className="page">
-	<div className="interactions">
+      <div>
+	<div>
 	  <Search value={query} onChange={this.onSearchChange}>
 	     Search
           </Search>
@@ -64,9 +65,9 @@ const Search= ({ value, onChange, children}) => {
 }
 
 const Table = ({ list, pattern}) => { 
-  <div className="table">
+  <div>
   { list.filter(isSearched(pattern)).map((item) => {
-	<div key={item.ObjectID} className="table-row">
+	<div key={item.ObjectID}>
           <span><a href={item.url}>{item.title}</a></span>
 	  <span>{item.author}</span>
 	  <span>{item.num_comments}</span>
