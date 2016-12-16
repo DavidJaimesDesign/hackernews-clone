@@ -42,10 +42,12 @@ class App extends Component {
   render() {
     const {query , list} = this.state;
     return (
-      <div className="App">
-	<Search value={query} onChange={this.onSearchChange}>
-	   Search
-        </Search>
+      <div className="page">
+	<div className="interactions">
+	  <Search value={query} onChange={this.onSearchChange}>
+	     Search
+          </Search>
+	</div>
         <Table list={list} pattern={query}/>
       </div>
     );
@@ -61,21 +63,16 @@ const Search= ({ value, onChange, children}) => {
     );	    
 }
 
-class Table extends Component {
-  render() {
-    const { list, pattern } = this.props;
-    return(
-      <div>
-	{ list.filter(isSearched(pattern)).map((item) =>
-	    <div key = {item.ObjectID}>
-		<span> <a href = {item.url}>{item.title}</a></span>
-	        <span>{item.author}</span>
-		<span>{item.num_comments}</span>
-		<span>{item.points}</span>
-            </div>
-	)}
-      </div>
-    )
-  }
+const Table = ({ list, pattern}) => { 
+  <div className="table">
+  { list.filter(isSearched(pattern)).map((item) => {
+	<div key={item.ObjectID} className="table-row">
+          <span><a href={item.url}>{item.title}</a></span>
+	  <span>{item.author}</span>
+	  <span>{item.num_comments}</span>
+	  <span>{item.points}</span>
+	</div>
+  })}
+  </div>
 }
 export default App;
